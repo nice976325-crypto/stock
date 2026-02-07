@@ -1,0 +1,681 @@
+<template>
+	<div class="addEdit-block" :style='{"minHeight":"100vh","padding":"30px","fontSize":"14px","color":"#666","background":"#e5e6e6"}'>
+		<el-form
+			:style='{"padding":"30px 30px 20px","borderColor":"#355749","borderRadius":"4px","alignItems":"flex-start","flexWrap":"wrap","background":"rgba(255,255,255,1)","borderWidth":"2px 0 0","display":"block","fontSize":"inherit","borderStyle":"solid"}'
+			class="add-update-preview"
+			ref="ruleForm"
+			:model="ruleForm"
+			:rules="rules"
+			label-width="150px"
+		>
+			<template >
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="股票代码" prop="stockcode">
+					<el-input v-model="ruleForm.stockcode" placeholder="股票代码" clearable  :readonly="ro.stockcode"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="股票代码" prop="stockcode">
+					<el-input v-model="ruleForm.stockcode" placeholder="股票代码" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="股票简称" prop="stockname">
+					<el-input v-model="ruleForm.stockname" placeholder="股票简称" clearable  :readonly="ro.stockname"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="股票简称" prop="stockname">
+					<el-input v-model="ruleForm.stockname" placeholder="股票简称" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="买入金额" prop="buybalance">
+					<el-input v-model="ruleForm.buybalance" placeholder="买入金额" clearable  :readonly="ro.buybalance"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="买入金额" prop="buybalance">
+					<el-input v-model="ruleForm.buybalance" placeholder="买入金额" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="卖出金额" prop="sellbalance">
+					<el-input v-model="ruleForm.sellbalance" placeholder="卖出金额" clearable  :readonly="ro.sellbalance"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="卖出金额" prop="sellbalance">
+					<el-input v-model="ruleForm.sellbalance" placeholder="卖出金额" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="成交金额" prop="balance">
+					<el-input v-model="ruleForm.balance" placeholder="成交金额" clearable  :readonly="ro.balance"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="成交金额" prop="balance">
+					<el-input v-model="ruleForm.balance" placeholder="成交金额" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="净买额" prop="netbuying">
+					<el-input v-model="ruleForm.netbuying" placeholder="净买额" clearable  :readonly="ro.netbuying"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="净买额" prop="netbuying">
+					<el-input v-model="ruleForm.netbuying" placeholder="净买额" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="排名" prop="ranking">
+					<el-input v-model.number="ruleForm.ranking" placeholder="排名" clearable  :readonly="ro.ranking"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="排名" prop="ranking">
+					<el-input v-model="ruleForm.ranking" placeholder="排名" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="收盘价" prop="closingprice">
+					<el-input-number v-model="ruleForm.closingprice" placeholder="收盘价" :disabled="ro.closingprice"></el-input-number>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="收盘价" prop="closingprice">
+					<el-input v-model="ruleForm.closingprice" placeholder="收盘价" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="涨跌幅" prop="pricelimit">
+					<el-input v-model="ruleForm.pricelimit" placeholder="涨跌幅" clearable  :readonly="ro.pricelimit"></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="涨跌幅" prop="pricelimit">
+					<el-input v-model="ruleForm.pricelimit" placeholder="涨跌幅" readonly></el-input>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' class="input" v-if="type!='info'"  label="涨跌额" prop="pricerange">
+					<el-input-number v-model="ruleForm.pricerange" placeholder="涨跌额" :disabled="ro.pricerange"></el-input-number>
+				</el-form-item>
+				<el-form-item :style='{"border":"0px solid #eee","padding":"0","margin":"0 0 16px 0","color":"inherit","borderRadius":"0px","width":"100%","fontSize":"inherit"}' v-else class="input" label="涨跌额" prop="pricerange">
+					<el-input v-model="ruleForm.pricerange" placeholder="涨跌额" readonly></el-input>
+				</el-form-item>
+			</template>
+			<el-form-item :style='{"padding":"10px 150px 20px 0","margin":"30px 0","alignItems":"center","textAlign":"center","display":"flex","width":"100%","perspective":"320px","-webkitPerspective":"320px","fontSize":"48px","justifyContent":"center"}' class="btn">
+				<el-button class="btn3"  v-if="type!='info'" type="success" @click="onSubmit">
+					<span class="icon iconfont icon-tijiao16" :style='{"margin":"0 2px","fontSize":"18px","color":"inherit","display":"none"}'></span>
+					保存
+				</el-button>
+				<el-button class="btn4" v-if="type!='info'" type="success" @click="back()">
+					<span class="icon iconfont icon-quxiao09" :style='{"margin":"0 2px","fontSize":"18px","color":"inherit","display":"none"}'></span>
+					取消
+				</el-button>
+				<el-button class="btn5" v-if="type=='info'" type="success" @click="back()">
+					<span class="icon iconfont icon-fanhui01" :style='{"margin":"0 2px","fontSize":"18px","color":"inherit","display":"none"}'></span>
+					返回
+				</el-button>
+			</el-form-item>
+		</el-form>
+    
+
+  </div>
+</template>
+<script>
+import { 
+	isNumber,
+	isIntNumer,
+} from "@/utils/validate";
+export default {
+	data() {
+		var validateNumber = (rule, value, callback) => {
+			if(!value){
+				callback();
+			} else if (!isNumber(value)) {
+				callback(new Error("请输入数字"));
+			} else {
+				callback();
+			}
+		};
+		var validateIntNumber = (rule, value, callback) => {
+			if(!value){
+				callback();
+			} else if (!isIntNumer(value)) {
+				callback(new Error("请输入整数"));
+			} else {
+				callback();
+			}
+		};
+		return {
+			id: '',
+			type: '',
+			
+			
+			ro:{
+				stockcode : false,
+				stockname : false,
+				buybalance : false,
+				sellbalance : false,
+				balance : false,
+				netbuying : false,
+				ranking : false,
+				closingprice : false,
+				pricelimit : false,
+				pricerange : false,
+			},
+			
+			
+			ruleForm: {
+				stockcode: '',
+				stockname: '',
+				buybalance: '',
+				sellbalance: '',
+				balance: '',
+				netbuying: '',
+				ranking: '',
+				closingprice: '',
+				pricelimit: '',
+				pricerange: '',
+			},
+		
+
+			
+			rules: {
+				stockcode: [
+				],
+				stockname: [
+				],
+				buybalance: [
+				],
+				sellbalance: [
+				],
+				balance: [
+				],
+				netbuying: [
+				],
+				ranking: [
+					{ validator: validateIntNumber, trigger: 'blur' },
+				],
+				closingprice: [
+					{ validator: validateNumber, trigger: 'blur' },
+				],
+				pricelimit: [
+				],
+				pricerange: [
+					{ validator: validateNumber, trigger: 'blur' },
+				],
+			}
+		};
+	},
+	props: ["parent"],
+	computed: {
+
+
+
+	},
+    components: {
+    },
+	created() {
+	},
+	methods: {
+		
+		// 下载
+		download(file){
+			window.open(`${file}`)
+		},
+		// 初始化
+		init(id,type) {
+			if (id) {
+				this.id = id;
+				this.type = type;
+			}
+			if(this.type=='info'||this.type=='else'){
+				this.info(id);
+			}else if(this.type=='logistics'){
+				this.logistics=false;
+				this.info(id);
+			}else if(this.type=='cross'){
+				var obj = this.$storage.getObj('crossObj');
+				for (var o in obj){
+						if(o=='stockcode'){
+							this.ruleForm.stockcode = obj[o];
+							this.ro.stockcode = true;
+							continue;
+						}
+						if(o=='stockname'){
+							this.ruleForm.stockname = obj[o];
+							this.ro.stockname = true;
+							continue;
+						}
+						if(o=='buybalance'){
+							this.ruleForm.buybalance = obj[o];
+							this.ro.buybalance = true;
+							continue;
+						}
+						if(o=='sellbalance'){
+							this.ruleForm.sellbalance = obj[o];
+							this.ro.sellbalance = true;
+							continue;
+						}
+						if(o=='balance'){
+							this.ruleForm.balance = obj[o];
+							this.ro.balance = true;
+							continue;
+						}
+						if(o=='netbuying'){
+							this.ruleForm.netbuying = obj[o];
+							this.ro.netbuying = true;
+							continue;
+						}
+						if(o=='ranking'){
+							this.ruleForm.ranking = obj[o];
+							this.ro.ranking = true;
+							continue;
+						}
+						if(o=='closingprice'){
+							this.ruleForm.closingprice = obj[o];
+							this.ro.closingprice = true;
+							continue;
+						}
+						if(o=='pricelimit'){
+							this.ruleForm.pricelimit = obj[o];
+							this.ro.pricelimit = true;
+							continue;
+						}
+						if(o=='pricerange'){
+							this.ruleForm.pricerange = obj[o];
+							this.ro.pricerange = true;
+							continue;
+						}
+				}
+			}
+			
+		},
+    // 多级联动参数
+
+    info(id) {
+      this.$http({
+        url: `topten/info/${id}`,
+        method: "get"
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+        this.ruleForm = data.data;
+        //解决前台上传图片后台不显示的问题
+        let reg=new RegExp('../../../upload','g')//g代表全部
+        } else {
+          this.$message.error(data.msg);
+        }
+      });
+    },
+
+
+    // 提交
+    onSubmit() {
+var objcross = this.$storage.getObj('crossObj');
+      //更新跨表属性
+       var crossuserid;
+       var crossrefid;
+       var crossoptnum;
+       if(this.type=='cross'){
+                var statusColumnName = this.$storage.get('statusColumnName');
+                var statusColumnValue = this.$storage.get('statusColumnValue');
+                if(statusColumnName!='') {
+                        var obj = this.$storage.getObj('crossObj');
+                       if(statusColumnName && !statusColumnName.startsWith("[")) {
+                               for (var o in obj){
+                                 if(o==statusColumnName){
+                                   obj[o] = statusColumnValue;
+                                 }
+                               }
+                               var table = this.$storage.get('crossTable');
+                             this.$http({
+                                 url: `${table}/update`,
+                                 method: "post",
+                                 data: obj
+                               }).then(({ data }) => {});
+                       } else {
+                               crossuserid=this.$storage.get('userid');
+                               crossrefid=obj['id'];
+                               crossoptnum=this.$storage.get('statusColumnName');
+                               crossoptnum=crossoptnum.replace(/\[/,"").replace(/\]/,"");
+                        }
+                }
+        }
+		this.$refs["ruleForm"].validate(valid => {
+			if (valid) {
+				if(crossrefid && crossuserid) {
+					this.ruleForm.crossuserid = crossuserid;
+					this.ruleForm.crossrefid = crossrefid;
+					let params = { 
+						page: 1, 
+						limit: 10, 
+						crossuserid:this.ruleForm.crossuserid,
+						crossrefid:this.ruleForm.crossrefid,
+					} 
+				this.$http({ 
+					url: "topten/page", 
+					method: "get", 
+					params: params 
+				}).then(({ 
+					data 
+				}) => { 
+					if (data && data.code === 0) { 
+						if(data.data.total>=crossoptnum) {
+							this.$message.error(this.$storage.get('tips'));
+							return false;
+						} else {
+							this.$http({
+								url: `topten/${!this.ruleForm.id ? "save" : "update"}`,
+								method: "post",
+								data: this.ruleForm
+							}).then(({ data }) => {
+								if (data && data.code === 0) {
+									this.$message({
+										message: "操作成功",
+										type: "success",
+										duration: 1500,
+										onClose: () => {
+											this.parent.showFlag = true;
+											this.parent.addOrUpdateFlag = false;
+											this.parent.toptenCrossAddOrUpdateFlag = false;
+											this.parent.search();
+											this.parent.contentStyleChange();
+										}
+									});
+								} else {
+									this.$message.error(data.msg);
+								}
+							});
+
+						}
+					} else { 
+				} 
+			});
+		} else {
+			this.$http({
+				url: `topten/${!this.ruleForm.id ? "save" : "update"}`,
+				method: "post",
+			   data: this.ruleForm
+			}).then(({ data }) => {
+				if (data && data.code === 0) {
+					this.$message({
+						message: "操作成功",
+						type: "success",
+						duration: 1500,
+						onClose: () => {
+							this.parent.showFlag = true;
+							this.parent.addOrUpdateFlag = false;
+							this.parent.toptenCrossAddOrUpdateFlag = false;
+							this.parent.search();
+							this.parent.contentStyleChange();
+						}
+					});
+				} else {
+					this.$message.error(data.msg);
+			   }
+			});
+		 }
+         }
+		});
+    },
+    // 获取uuid
+    getUUID () {
+      return new Date().getTime();
+    },
+    // 返回
+    back() {
+      this.parent.showFlag = true;
+      this.parent.addOrUpdateFlag = false;
+      this.parent.toptenCrossAddOrUpdateFlag = false;
+      this.parent.contentStyleChange();
+    },
+  }
+};
+</script>
+<style lang="scss" scoped>
+	.amap-wrapper {
+		width: 100%;
+		height: 500px;
+	}
+	
+	.search-box {
+		position: absolute;
+	}
+	
+	.el-date-editor.el-input {
+		width: auto;
+	}
+	
+	.add-update-preview .el-form-item /deep/ .el-form-item__label {
+	  	  padding: 0 10px 0 0;
+	  	  color: #333;
+	  	  font-weight: 600;
+	  	  display: inline-block;
+	  	  width: 150px;
+	  	  font-size: inherit;
+	  	  line-height: 40px;
+	  	  text-align: right;
+	  	}
+	
+	.add-update-preview .el-form-item /deep/ .el-form-item__content {
+	  margin-left: 150px;
+	}
+	
+	.add-update-preview .el-input /deep/ .el-input__inner {
+	  	  border-radius: 4px;
+	  	  padding: 0 12px;
+	  	  box-shadow: 0 0 0px rgba(64, 158, 255, .5);
+	  	  outline: none;
+	  	  color: inherit;
+	  	  background: #fff;
+	  	  width: auto;
+	  	  font-size: 14px;
+	  	  border-color: e2e2e4;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  height: 36px;
+	  	}
+	.add-update-preview .el-input-number /deep/ .el-input__inner {
+		text-align: left;
+	  	  border-radius: 4px;
+	  	  padding: 0 12px;
+	  	  box-shadow: 0 0 0px rgba(64, 158, 255, .5);
+	  	  outline: none;
+	  	  color: inherit;
+	  	  background: #fff;
+	  	  width: auto;
+	  	  font-size: 14px;
+	  	  border-color: e2e2e4;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  height: 36px;
+	  	}
+	.add-update-preview .el-input-number /deep/ .el-input-number__decrease {
+		display: none;
+	}
+	.add-update-preview .el-input-number /deep/ .el-input-number__increase {
+		display: none;
+	}
+	
+	.add-update-preview .el-select /deep/ .el-input__inner {
+	  	  padding: 0 10px;
+	  	  color: inherit;
+	  	  font-size: 14px;
+	  	  border-color: #e2e2e4;
+	  	  border-radius: 4px;
+	  	  box-shadow: 0 0 0px rgba(64, 158, 255, .5);
+	  	  outline: none;
+	  	  background: #fff;
+	  	  width: auto;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  min-width: 300px;
+	  	  height: 36px;
+	  	}
+	
+	.add-update-preview .el-date-editor /deep/ .el-input__inner {
+	  	  padding: 0 10px 0 30px;
+	  	  color: inherit;
+	  	  font-size: 14px;
+	  	  border-color: #e2e2e4;
+	  	  border-radius: 4px;
+	  	  box-shadow: 0 0 0px rgba(64, 158, 255, .5);
+	  	  outline: none;
+	  	  background: #fff;
+	  	  width: auto;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  min-width: 350px;
+	  	  height: 36px;
+	  	}
+	
+	.add-update-preview /deep/ .el-upload--picture-card {
+		background: transparent;
+		border: 0;
+		border-radius: 0;
+		width: auto;
+		height: auto;
+		line-height: initial;
+		vertical-align: middle;
+	}
+	
+	.add-update-preview /deep/ .upload .upload-img {
+	  	  cursor: pointer;
+	  	  color: #ccc;
+	  	  object-fit: cover;
+	  	  font-size: 24px;
+	  	  border-color: #e2e2e4;
+	  	  line-height: 80px;
+	  	  border-radius: 4px;
+	  	  background: #fff;
+	  	  width: 160px;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  text-align: center;
+	  	  height: 80px;
+	  	}
+	
+	.add-update-preview /deep/ .el-upload-list .el-upload-list__item {
+	  	  cursor: pointer;
+	  	  color: #ccc;
+	  	  object-fit: cover;
+	  	  font-size: 24px;
+	  	  border-color: #e2e2e4;
+	  	  line-height: 80px;
+	  	  border-radius: 4px;
+	  	  background: #fff;
+	  	  width: 160px;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  text-align: center;
+	  	  height: 80px;
+	  	}
+	
+	.add-update-preview /deep/ .el-upload .el-icon-plus {
+	  	  cursor: pointer;
+	  	  color: #ccc;
+	  	  object-fit: cover;
+	  	  font-size: 24px;
+	  	  border-color: #e2e2e4;
+	  	  line-height: 80px;
+	  	  border-radius: 4px;
+	  	  background: #fff;
+	  	  width: 160px;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  text-align: center;
+	  	  height: 80px;
+	  	}
+	
+	.add-update-preview .el-textarea /deep/ .el-textarea__inner {
+	  	  padding: 12px;
+	  	  color: inherit;
+	  	  font-size: 14px;
+	  	  border-color: #e2e2e4;
+	  	  min-height: 120px;
+	  	  border-radius: 4px;
+	  	  box-shadow: 0 0 0px rgba(64, 158, 255, .5);
+	  	  outline: none;
+	  	  background: #fff;
+	  	  width: auto;
+	  	  border-width: 1px;
+	  	  border-style: solid;
+	  	  min-width: 400px;
+	  	  height: auto;
+	  	}
+	
+	.add-update-preview .btn .btn1 {
+				border: 0px solid rgba(53, 184, 224, 0.1);
+				cursor: pointer;
+				padding: 0 10px;
+				margin: 0px 10px 0 0;
+				color: #fff;
+				display: inline-block;
+				font-size: 14px;
+				line-height: 34px;
+				border-radius: 2px;
+				box-shadow: 0 4px #29b392;
+				outline: none;
+				background: #41cac0;
+				width: auto;
+				height: 34px;
+			}
+	
+	.add-update-preview .btn .btn1:hover {
+				transform: translate3d(0px, 6px, 0px);
+				opacity: 0.8;
+			}
+	
+	.add-update-preview .btn .btn2 {
+				border: 0px solid rgba(24, 138, 226, 0.1) ;
+				cursor: pointer;
+				padding: 0 10px;
+				margin: 0px 10px 0 0;
+				color: #fff;
+				font-size: 14px;
+				line-height: 34px;
+				border-radius: 2px;
+				box-shadow: 0 4px #cab03f;
+				outline: none;
+				background: #e4ba00;
+				width: auto;
+				height: 34px;
+			}
+	
+	.add-update-preview .btn .btn2:hover {
+				transform: translate3d(0px, 6px, 0px);
+				opacity: 0.8;
+			}
+	
+	.add-update-preview .btn .btn3 {
+				border: 0px solid #0260ad;
+				cursor: pointer;
+				padding: 0 20px;
+				margin: 0px 10px 0 0;
+				color: #fff;
+				font-size: 14px;
+				line-height: 24px;
+				border-radius: 2px;
+				box-shadow: 0 4px #1caadc;
+				outline: none;
+				background: #58c9f3;
+				width: auto;
+				height: 34px;
+			}
+	
+	.add-update-preview .btn .btn3:hover {
+				transform: translate3d(0px, 6px, 0px);
+				opacity: 0.8;
+			}
+	
+	.add-update-preview .btn .btn4 {
+				border: 0px solid rgba(126, 96, 16, .2);
+				cursor: pointer;
+				padding: 0 20px;
+				margin: 0px 10px 0 0;
+				color: #fff;
+				font-size: 14px;
+				line-height: 34px;
+				border-radius: 2px;
+				box-shadow: 0 4px #61a642;
+				outline: none;
+				background: #78CD51;
+				width: auto;
+				height: 34px;
+			}
+	
+	.add-update-preview .btn .btn4:hover {
+				transform: translate3d(0px, 6px, 0px);
+				opacity: 0.8;
+			}
+	
+	.add-update-preview .btn .btn5 {
+				border: 1px solid #cecece;
+				cursor: pointer;
+				padding: 0 20px;
+				margin: 0px 10px 0 0;
+				color: #ACA9A9;
+				font-size: 14px;
+				line-height: 34px;
+				border-radius: 2px;
+				box-shadow: 0 4px #9c9c9c;
+				outline: none;
+				background: #fff;
+				width: auto;
+				height: 34px;
+			}
+	
+	.add-update-preview .btn .btn5:hover {
+				transform: translate3d(0px, 6px, 0px);
+				background: #ececec;
+				opacity: 1;
+			}
+</style>
