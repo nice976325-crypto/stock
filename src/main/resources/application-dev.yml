@@ -16,8 +16,8 @@ spring:
     datasource:
         driverClassName: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/springbootnd27788u?useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&useSSL=false
-        username: root
-        password: Zu123456Le
+        username: 2323
+        password: 3434
 
     servlet:
       multipart:
